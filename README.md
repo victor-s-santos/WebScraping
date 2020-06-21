@@ -35,4 +35,5 @@
 > O Selenium foi escolhido pois sua integração permitia que informações contidas em páginas que são produtos de algum framework javascript (como Vue e React) possam ser coletadas, e então tratadas. Como o python, através de requests, não consegue ler javascript, o selenium foi utilizado por conseguir trazer estas informações através do navegador (no caso, Firefox). Foi definido que o navegador executasse em 'segundo plano' (não era aberto visualmente), e como trata-se de requisições assíncronas, é necessário um timer (usado 10 segundos, em virtude da instabilidade de minha conexão) para que o python só fosse coletar a informação após o navegador carregá-la. 
 
 
-
+# BeautifulSoup
+>Principal biblioteca python na função de webscrap. Neste repositório ele possui a função de parsear a informação coletada em html. Como as páginas requisitadas não possuem uma boa estruturação em html assim como não há um padrão, não foi possível explorar mais das funcionalidades desta biblioteca. O texto coletado teve de ser tratado com if's simples do python.  
