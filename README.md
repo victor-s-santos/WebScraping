@@ -26,6 +26,13 @@
 > Neste notebook a ideia implementada é de extrair todas as leis presentes nas fontes usadas e exportá-las em um csv ou mesmo uma visualização melhor utilizando o pandas. Há uma quantidade muito grande de leis, portanto há uma grande necessidade de tratamento dos dados, haja vista que as páginas que contenham as leis não estão bem formatadas. 
 
 # Scrap2.ipynb e Scrap_notebook.ipynb
-> Neste notebook foi aplicada a ideia principal, de buscar somente a lei, artigo, inciso e alínea solicitados pelo usuário. O código central do notebook scrap2 foi refatorado e copiado para o notebook scrap_notebook. 
+> Neste notebook foi aplicada a ideia principal, de buscar somente a lei, artigo, inciso e alínea solicitados pelo usuário. O código central do notebook scrap2 foi refatorado e copiado para o notebook scrap_notebook.
+
+# Scrap.py
+> Arquivo python que contem somente a parte funcional do notebook scrap_notebook.ipynb.
+
+# Selenium
+> O Selenium foi escolhido pois sua integração permitia que informações contidas em páginas que são produtos de algum framework javascript (como Vue e React) possam ser coletadas, e então tratadas. Como o python, através de requests, não consegue ler javascript, o selenium foi utilizado por conseguir trazer estas informações através do navegador (no caso, Firefox). Foi definido que o navegador executasse em 'segundo plano' (não era aberto visualmente), e como trata-se de requisições assíncronas, é necessário um timer (usado 10 segundos, em virtude da instabilidade de minha conexão) para que o python só fosse coletar a informação após o navegador carregá-la. 
+
 
 
