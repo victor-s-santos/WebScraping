@@ -17,3 +17,9 @@
     > Executar dentro de um kernel em execução do jupyter.
     import sys
     !{sys.executable} -m pip install -r requirements.txt
+
+4. Rodar o Notebook:
+> Dentro do virtualenv criado:
+    * ipython notebook
+
+    
