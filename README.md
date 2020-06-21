@@ -22,4 +22,10 @@
 > Dentro do virtualenv criado:
     * ipython notebook
 
-    
+# Scrap1.ipynb
+> Neste notebook a ideia implementada é de extrair todas as leis presentes nas fontes usadas e exportá-las em um csv ou mesmo uma visualização melhor utilizando o pandas. Há uma quantidade muito grande de leis, portanto há uma grande necessidade de tratamento dos dados, haja vista que as páginas que contenham as leis não estão bem formatadas. 
+
+# Scrap2.ipynb e Scrap_notebook.ipynb
+> Neste notebook foi aplicada a ideia principal, de buscar somente a lei, artigo, inciso e alínea solicitados pelo usuário. O código central do notebook scrap2 foi refatorado e copiado para o notebook scrap_notebook. 
+
+
