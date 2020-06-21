@@ -36,4 +36,14 @@
 
 
 # BeautifulSoup
->Principal biblioteca python na função de webscrap. Neste repositório ele possui a função de parsear a informação coletada em html. Como as páginas requisitadas não possuem uma boa estruturação em html assim como não há um padrão, não foi possível explorar mais das funcionalidades desta biblioteca. O texto coletado teve de ser tratado com if's simples do python.  
+>Principal biblioteca python na função de webscrap. Neste repositório ele possui a função de parsear a informação coletada em html. Como as páginas requisitadas não possuem uma boa estruturação em html assim como não há um padrão, não foi possível explorar mais das funcionalidades desta biblioteca. O texto coletado teve de ser tratado com if's simples do python.
+
+# Próximos passos
+>O notebook ainda apresenta alguns problemas:
+    -Como alguns artigos fogem do padrão, o programa ainda não consegue trazer estas informações de maneira eficiente, para alguns artigos; 
+    -Otimização no tempo de espera do Selenium;
+    -Refatoração do código final, a fim de aplicar orientação a objeto e quebrar o código em módulos.
+    -Implementação de uma suíte de testes.
+
+# Agradecimento
+>Meu muito obrigado a sua visita. Se possível, por favor, faça alguma sugestão no código.
