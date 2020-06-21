@@ -3,9 +3,9 @@
       <p align="center">
         <a href="#sobre">Sobre</a> •
         <a href="#como_rodar">Como Rodar</a> •
-        <a href="#scrap1.ipynb">Scrap1</a> •
-        <a href="#scrap2.ipynb_e_scrap_notebook.ipynb">Scrap2.ipynb e Scrap_notebook.ipynb</a> •
-        <a href="#scrap.py">Scrap.py</a> •
+        <a href="#Scrap1">Scrap1</a> •
+        <a href="#Scrap2_e_scrap_notebook">Scrap2.ipynb e Scrap_notebook.ipynb</a> •
+        <a href="#scrap">Scrap.py</a> •
         <a href="#selenium">Selenium</a> •
         <a href="#beautifulSoup">BeautifulSoup</a> •
         <a href="#proximos_passos">Próximos_passos</a> • 
@@ -38,13 +38,13 @@
 > Dentro do virtualenv criado:
     * ipython notebook
 
-# Scrap1.ipynb
+# Scrap1
 > Neste notebook a ideia implementada é de extrair todas as leis presentes nas fontes usadas e exportá-las em um csv ou mesmo uma visualização melhor utilizando o pandas. Há uma quantidade muito grande de leis, portanto há uma grande necessidade de tratamento dos dados, haja vista que as páginas que contenham as leis não estão bem formatadas. 
 
-# Scrap2.ipynb_e_scrap_notebook.ipynb
+# Scrap2_e_scrap_notebook
 > Neste notebook foi aplicada a ideia principal, de buscar somente a lei, artigo, inciso e alínea solicitados pelo usuário. O código central do notebook scrap2 foi refatorado e copiado para o notebook scrap_notebook.
 
-# Scrap.py
+# Scrap
 > Arquivo python que contem somente a parte funcional do notebook scrap_notebook.ipynb.
 
 # Selenium
