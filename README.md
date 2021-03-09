@@ -28,13 +28,14 @@
 
 3. Instalar as dependências:
     3.1.1. Jupyter:
-    * pip install ipython[notebook] `para instalar o jubpyter`
+    * pip install ipython[notebook] `para instalar o jupyter`
     3.1.2. Instalando as dependências do Jupyter:
-    > Executar dentro de um kernel em execução do jupyter.
-    import sys
-    !{sys.executable} -m pip install -r requirements.txt
+    > pip install -r requirements.txt
 
-4. Rodar o Notebook:
+4. Instalar o driver:
+    * sudo apt-get install firefox-geckodriver
+
+5. Rodar o Notebook:
 > Dentro do virtualenv criado:
     * ipython notebook
 
