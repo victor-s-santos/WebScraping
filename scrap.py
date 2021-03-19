@@ -1,3 +1,5 @@
+import re
+import pandas as pd
 import time
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -9,96 +11,65 @@ class Scrap:
         self.lei = lei
         self.n = n
         self.p = p
-        self.inciso1 = inciso
-        
         self.art = str('Art. ' + str(self.n))
         self.lista_paragrafo = []
         self.lista_inciso = []
-        
-        url = 'https://www2.camara.leg.br/busca/?q=' + lei
+    
+    def conecta(self):
+        self.url = 'https://www2.camara.leg.br/busca/?q=' + self.lei
         option = Options()
-        option.headless = True
+        option.headless = False
         driver = webdriver.Firefox(options=option)
-        driver.get(url)
+        driver.get(self.url)
         driver.find_element_by_xpath("//div[@id='resultadoBusca']//ul//li//span//a").click()
+        time.sleep(2)
         driver.find_element_by_xpath("//div[@class='sessao']//a").click()
+        time.sleep(1)
         element = driver.find_element_by_xpath("//div[@class='texto']")
         self.titulo = driver.find_element_by_class_name('ementa')
-        html_content = element.get_attribute('outerHTML')
+        self.html_content = element.get_attribute('outerHTML')
         self.titulo = self.titulo.get_attribute('outerHTML')
-        #time.sleep(2)
         driver.quit()
-
-        self.soup = BeautifulSoup(html_content, 'lxml')
-        self.texto = self.soup.find_all(text=True)
-
-        self.titulo = BeautifulSoup(self.titulo, 'lxml')
-        self.titulo = self.titulo.find_all(text=True)
+        return self.html_content
         
     def title(self):
-        """Returns the law title""" 
+        """Returns the law title"""
+        self.soup = BeautifulSoup(self.html_content, 'lxml')
+        self.texto = self.soup.find_all(text=True)
+        self.titulo = BeautifulSoup(self.titulo, 'lxml')
+        self.titulo = self.titulo.find_all(text=True)
         for i in range(len(self.titulo)):
             self.titulo[i] = self.titulo[i].replace('\n', '')
             self.titulo[i] = self.titulo[i].replace('\t', '')
-            if '' in self.titulo:
-                self.titulo.remove('')
-            return(self.titulo[0])
+        return self.titulo[0]
    
     def article(self):
-        for i in range(len(self.texto)):
-            if (f'Art. {int(self.n)}') in self.texto[i]:
-                self.texto[i] = self.texto[i].replace('\n', '')
-                self.texto[i] = self.texto[i].replace('\t', '')
-                self.texto[i] = self.texto[i].replace('\xa0', '')
-                self.i2 = i
-                return(self.texto[i])
-
+        self.inicio_article = re.search(f'Art. {self.n}', self.html_content).start()
+        return self.html_content[self.inicio_article:].replace('&nbsp;', '-').split('<br>')[0]
+    
     def paragraph(self):
-        self.article()
-        """Returns every laws paragraph of the inserted article or the requested paragraph"""
-        for i in range(self.i2,len(self.texto)):
-            if '' in self.texto:
-                self.texto.remove('')
-        
-        for i in range(self.i2, len(self.texto)):
-            if (f'Art. {int(self.n) +1}') in self.texto[i]:
-                break
+        """Returns the requested paragraph"""
+        self.conteudo = BeautifulSoup(self.html_content, 'lxml').find_all()[0]
+        self.conteudo = str(self.conteudo).replace('\xa0', '')
+        """buscando o artigo"""
+        inicio_artigo = re.search(f'Art. {self.n}', self.conteudo).start()
+        fim_artigo = re.search('<b', self.conteudo[(inicio_artigo):]).start()
+        #str(paragrafo[0])[inicio_artigo:].replace('\xa0', '').split('<br/>')[0]
+        fim_artigo += inicio_artigo
+        self.conteudo[inicio_artigo: fim_artigo]
+        if self.p == 0:
+            inicio_article = re.search(f'Art. {self.n}', self.html_content).start()
+            inicio_paragrafo_unico = re.search('Parágrafo único.', self.conteudo[fim_artigo:]).start()
+            fim_paragrafo_unico = re.search('<br/>', self.conteudo[(fim_artigo + inicio_paragrafo_unico):]).start()
+            fim_paragrafo_unico += inicio_paragrafo_unico
+            conteudo2 = self.conteudo[fim_artigo:]
+            conteudo2 = conteudo2[inicio_paragrafo_unico : fim_paragrafo_unico].replace('</i>', '')
+            return(conteudo2)
+        return('Ainda não implementado a busca de parágrafos numerados.')
+   
 
-            if '§' in self.texto[i]:
-                self.texto[i] = self.texto[i].replace('\n', '')
-                self.texto[i] = self.texto[i].replace('\t', '')
-                self.texto[i] = self.texto[i].replace('\xa0', '')
-                self.lista_paragrafo.append(self.texto[i])
-                
-        if len(self.lista_paragrafo) == 0:
-            return('O artigo requisitado não possui parágrafos.')
-        
-        if self.p is not None:
-            return(self.article(),self.lista_paragrafo[(self.p)-1])
-        else:
-            return(self.article(),self.lista_paragrafo)
-    
-    
-    def inciso(self):
-        """Returns the requested item from the article / law, 
-        if no item was requested the entire list is returned"""
-        if self.inciso1 is not None:
-            for i in range(self.i2, len(self.texto)):
-                if (f'Art. {int(self.n) +1}') in self.texto[i]:
-                    break
-                if (str(self.inciso1)) in self.texto[i]:
-                    self.texto[i] = self.texto[i].replace('\xa0', '')
-                    return(self.texto[i])
-                return('O inciso requisitado não foi encontrado!')
-        else:
-            for i in range(self.i2, len(self.texto)):
-                if (f'Art. {int(self.n) +1}') in self.texto[i]:
-                    break
-                if ('I' or 'II' or 'III' or 'IV' or 'V'
-                   or 'VI' or 'VII' or 'VIII' or 'IX' or 'X') in self.texto[i][0:6]:
-                    self.texto[i] = self.texto[i].replace('\xa0', '')
-                    self.lista_inciso.append(self.texto[i])
-            if(len(self.lista_inciso) == 0):
-                return('O artigo requisitado não possui incisos!')
-            else:
-                return(self.lista_inciso)
+teste = Scrap('lei 1.060', n=2, p=0)
+teste.conecta()
+print(f'Título da lei:{teste.title()}\n')
+print(f'Artigo requisitado: {teste.article()}\n')
+print(f'Parágrafo requisitado: {teste.paragraph()}\n')
